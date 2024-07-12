@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faUser } from "@fortawesome/free-solid-svg-icons";
@@ -6,10 +7,18 @@ import { Logo } from '../assets/img';
 
 const Header2 = () => {
   const [searchTerm, setSearchTerm] = useState(""); // State to hold search term
+  const navigate = useNavigate();
 
   // Function to handle search input change
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value); // Update search term state
+  };
+
+  // Function to handle search action
+  const handleSearch = () => {
+    if (searchTerm.trim()) {
+      navigate(`/products?search=${searchTerm}`);
+    }
   };
 
   return (
@@ -63,6 +72,7 @@ const Header2 = () => {
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             className="cursor-pointer text-gray-500"
+            onClick={handleSearch} // Handle search action
           />
         </label>
         <div className="ml-36 flex items-center">

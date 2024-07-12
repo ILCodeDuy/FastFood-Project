@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Categories from "./Categories";
@@ -12,55 +13,54 @@ const Menu = () => {
   const [selectedCategory, setSelectedCategory] = useState(null); // Selected category state
   const [currentPage, setCurrentPage] = useState(1); // Current page state
   const [productsPerPage] = useState(12); // Products per page
+  const location = useLocation();
 
   // Fetch categories
   useEffect(() => {
     fetch("http://localhost:3001/api/categories")
       .then((response) => response.json())
       .then((data) => {
-        setCategories(data); // Save categories from API to state
+        setCategories(data);
       })
       .catch((error) => {
         console.error("Error fetching categories:", error);
       });
-  }, []); // Fetch categories only once on component mount
+  }, []);
 
-  // Fetch products based on selected category
   useEffect(() => {
-    fetchProducts(selectedCategory);
-  }, [selectedCategory]); // Fetch products whenever selectedCategory changes
+    const queryParams = new URLSearchParams(location.search);
+    const searchTerm = queryParams.get('search') || "";
+    fetchProducts(selectedCategory, searchTerm);
+  }, [selectedCategory, location.search]);
 
-  // Function to fetch products based on category ID
-  const fetchProducts = (categoryId) => {
+  const fetchProducts = (categoryId, keyword) => {
     let apiUrl = "http://localhost:3001/api/data";
-    if (categoryId) {
-      apiUrl += `?categoryId=${categoryId}`;
-    }
+    const queryParams = new URLSearchParams();
+    if (categoryId) queryParams.append('categoryId', categoryId);
+    if (keyword) queryParams.append('keyword', keyword);
+    if (queryParams.toString()) apiUrl += `?${queryParams.toString()}`;
+
     fetch(apiUrl)
       .then((response) => response.json())
       .then((data) => {
-        setProducts(data); // Save products from API to state
+        setProducts(data);
       })
       .catch((error) => {
         console.error("Error fetching products:", error);
       });
   };
 
-  // Calculate total number of pages for pagination
   const totalPages = Math.ceil(products.length / productsPerPage);
 
-  // Function to handle pagination
   const paginate = (pageNumber) => setCurrentPage(pageNumber);
 
-  // Calculate index of first and last product on current page
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  // Handle category change
   const handleCategoryChange = (categoryId) => {
     setSelectedCategory(categoryId);
-    setCurrentPage(1); // Reset page to 1 when category changes
+    setCurrentPage(1);
   };
 
   return (
