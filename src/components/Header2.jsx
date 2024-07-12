@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Logo } from '../assets/img';
 
 const Header2 = () => {
+  const [searchTerm, setSearchTerm] = useState(""); // State to hold search term
+
+  // Function to handle search input change
+  const handleSearchChange = (event) => {
+    setSearchTerm(event.target.value); // Update search term state
+  };
+
   return (
     <div className="h-32 border-b-[1px]">
       <div className="flex shadow h-32 items-center z-50">
@@ -46,7 +53,13 @@ const Header2 = () => {
           </ul>
         </div>
         <label className="input input-bordered flex items-center gap-2 mx-8 w-[300px]">
-          <input type="text" className="grow text-gray-700" placeholder="Search" />
+          <input
+            type="text"
+            className="grow text-gray-700"
+            placeholder="Search"
+            value={searchTerm}
+            onChange={handleSearchChange} // Handle input change
+          />
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
             className="cursor-pointer text-gray-500"

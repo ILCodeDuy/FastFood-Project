@@ -1,24 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 
-const Categories = () => {
-  const [categories, setCategories] = useState([]);
-  useEffect(() => {
-    // Fetch categories
-    fetch("http://localhost:3001/api/categories")
-      .then((response) => response.json())
-      .then((data) => {
-        setCategories(data); // Lưu danh sách danh mục từ API vào state
-      })
-      .catch((error) => {
-        console.error("Error fetching categories:", error);
-      });
-  }, []);
+const Categories = ({ categories, onCategoryChange }) => {
+  const handleCategoryChange = (e) => {
+    const categoryId = e.target.value;
+    onCategoryChange(categoryId);
+  };
+
   return (
-    <div>
+    <div className="mb-10">
       <label className="ml-32">Chọn danh mục:</label>
       <select
         defaultValue="default"
         className="select select-bordered w-full max-w-xs ml-4"
+        onChange={handleCategoryChange}
       >
         <option value="default" disabled>
           Chọn danh mục

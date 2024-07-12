@@ -1,13 +1,24 @@
 import React from "react";
 
-const Pagination = () => {
+const Pagination = ({ totalPages, currentPage, onPageChange }) => {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= totalPages; i++) {
+    pageNumbers.push(i);
+  }
+
   return (
-    <div>
-      <ul className="pagination flex place-content-center mt-12 pb-12">
-        <li className="page-item p-3 mr-2 bg-gray-300">
-          <div
-          >1</div>
-        </li>
+    <div className="flex justify-center mt-12 pb-12">
+      <ul className="pagination flex">
+        {pageNumbers.map((number) => (
+          <li
+            key={number}
+            className={`page-item p-3 mr-2 ${number === currentPage ? 'bg-gray-400' : 'bg-gray-200'}`}
+            onClick={() => onPageChange(number)}
+          >
+            <div className="cursor-pointer">{number}</div>
+          </li>
+        ))}
       </ul>
     </div>
   );
