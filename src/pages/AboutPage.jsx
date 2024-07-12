@@ -1,12 +1,16 @@
 import React from 'react';
+import Header2 from '../components/Header2';
+import Footer from "../components/Footer";
+import About from "../components/Home/About";
 
-const About = () => {
+const AboutPage = () => {
   return (
-    <div className="p-6">
-      <h2 className="text-2xl font-bold">Welcome to My Website</h2>
-      <p className="mt-4 text-gray-700">This is the home page.</p>
+    <div>
+      <Header2 />
+      <About />
+      <Footer />
     </div>
   );
 };
 
-export default About;
+export default AboutPage;

@@ -1,22 +1,23 @@
 import React from "react";
-import { NavLink} from "react-router-dom";
-import { Logo } from '../../assets/img';
+import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faUser } from "@fortawesome/free-solid-svg-icons";
-const Header = () => {
+import { Logo } from '../assets/img';
+
+const Header2 = () => {
   return (
-    <div className="h-52">
-      <div className="flex center items-center z-50 relative top-0">
-        <div className="size-48 mx-32">
+    <div className="h-32 border-b-[1px]">
+      <div className="flex shadow h-32 items-center z-50">
+        <div className="size-28 mx-16">
           <img src={Logo} alt="Logo" />
         </div>
         <div className="mr-20">
-          <ul className="flex lg:menu-horizontal text-base">
+          <ul className="flex lg:menu-horizontal text-base font-semibold">
             <li>
               <NavLink
                 to="/"
                 className={({ isActive }) =>
-                  isActive ? "mr-6 text-yellow-500" : "mr-6 text-white"
+                  isActive ? "mr-6 text-yellow-500" : "mr-6"
                 }
               >
                 TRANG CHỦ
@@ -26,7 +27,7 @@ const Header = () => {
               <NavLink
                 to="/products"
                 className={({ isActive }) =>
-                  isActive ? "mr-6 text-yellow-500" : "mr-6 text-white"
+                  isActive ? "mr-6 text-yellow-500" : "mr-6"
                 }
               >
                 THỰC ĐƠN
@@ -34,9 +35,9 @@ const Header = () => {
             </li>
             <li>
               <NavLink
-                to="/about" // Update the path as necessary
+                to="/about"
                 className={({ isActive }) =>
-                  isActive ? "mr-6 text-yellow-500" : "mr-6 text-white"
+                  isActive ? "mr-6 text-yellow-500" : "mr-6"
                 }
               >
                 VỀ CHÚNG TÔI
@@ -44,11 +45,14 @@ const Header = () => {
             </li>
           </ul>
         </div>
-        <div className="ml-44 flex items-center">
+        <label className="input input-bordered flex items-center gap-2 mx-8 w-[300px]">
+          <input type="text" className="grow text-gray-700" placeholder="Search" />
           <FontAwesomeIcon
             icon={faMagnifyingGlass}
-            className="text-2xl mr-10 text-white cursor-pointer"
+            className="cursor-pointer text-gray-500"
           />
+        </label>
+        <div className="ml-36 flex items-center">
           <NavLink to="/login">
             <FontAwesomeIcon
               icon={faUser}
@@ -58,20 +62,20 @@ const Header = () => {
           <NavLink to="/profile">
             <FontAwesomeIcon
               icon={faUser}
-              className="text-2xl mr-10 text-white cursor-pointer"
+              className="text-2xl mr-10 cursor-pointer"
             />
           </NavLink>
           <div className="flex-none">
             <NavLink to="/cart">
-              <div className="dropdown  dropdown-end">
-                <div tabIndex="0" role="button" className="btn btn-ghost  btn-circle">
+              <div className="dropdown dropdown-end">
+                <div tabIndex="0" role="button" className="btn btn-ghost btn-circle">
                   <div className="indicator">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
-                      className="size-7 text-white"
+                      className="size-7 text-black"
                       fill="none"
                       viewBox="0 0 24 24"
-                      stroke="#FFF"
+                      stroke="#000"
                     >
                       <path
                         strokeLinecap="round"
@@ -80,7 +84,7 @@ const Header = () => {
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                       />
                     </svg>
-                    <span className="badge badge-sm indicator-item text-white bg-red-500 rounded-full size-5">2</span>
+                    <span className="badge badge-sm indicator-item text-black bg-red-500 rounded-full size-5">2</span>
                   </div>
                 </div>
               </div>
@@ -92,4 +96,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default Header2;

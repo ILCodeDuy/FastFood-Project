@@ -2,6 +2,7 @@ import React from "react";
 import { faEnvelope, faMapMarkerAlt, faPhone } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
+import { faFacebookF, faTwitter, faTelegramPlane, faLinkedinIn, faPinterestP } from "@fortawesome/free-brands-svg-icons";
 
 const Footer = () => {
   return (
@@ -32,14 +33,29 @@ const Footer = () => {
           </p>
         </div>
         <div className="mt-12">
-          {/* Replace anchor tag with Link */}
           <Link to="#" className="dancing-script text-5xl text-white">
             Ăn không sợ BÉO!
           </Link>
           <p className="text-gray-300 font-bold mt-6 text-center">
             Ăn là để thưởng thức!
           </p>
-          <div className="flex mt-6 ml-16">{/* Your social media icons */}</div>
+          <div className="flex mt-6 ml-16">
+            <div className="bg-white pt-1 pl-[10px] size-8 rounded-full mr-2">
+              <FontAwesomeIcon icon={faFacebookF} className="text-gray-900" />
+            </div>
+            <div className="bg-white pt-1 pl-[10px] size-8 rounded-full mr-2">
+              <FontAwesomeIcon icon={faTwitter} className="text-gray-900" />
+            </div>
+            <div className="bg-white pt-1 pl-[10px] size-8 rounded-full mr-2">
+              <FontAwesomeIcon icon={faTelegramPlane} className="text-gray-900" />
+            </div>
+            <div className="bg-white pt-1 pl-[10px] size-8 rounded-full mr-2">
+              <FontAwesomeIcon icon={faLinkedinIn} className="text-gray-900" />
+            </div>
+            <div className="bg-white pt-1 pl-[10px] size-8 rounded-full mr-2">
+              <FontAwesomeIcon icon={faPinterestP} className="text-gray-900" />
+            </div>
+          </div>
         </div>
         <div className="mt-12">
           <h4 className="dancing-script text-3xl text-white">Giờ mở cửa</h4>
