@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import { format } from "date-fns";
+import imagePaths from "../../assets/menu/menu";
 
 const OrderPage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
@@ -23,7 +25,7 @@ const OrderPage = () => {
     axios
       .get(`http://localhost:3001/api/orderdetails/${invoiceId}`)
       .then((response) => {
-        setSelectedInvoice(invoices.find(inv => inv.id === invoiceId));
+        setSelectedInvoice(invoices.find((inv) => inv.id === invoiceId));
         setSelectedInvoiceDetails(response.data);
       })
       .catch((error) => {
@@ -36,6 +38,10 @@ const OrderPage = () => {
     setSelectedInvoiceDetails([]);
   };
 
+  const formatDate = (date) => {
+    return format(new Date(date), "dd/MM/yyyy");
+  };
+
   return (
     <div>
       <div className="bg-white shadow-md rounded p-6">
@@ -44,7 +50,7 @@ const OrderPage = () => {
           {invoices.map((invoice) => (
             <div
               key={invoice.id}
-              className="bg-gray-100 p-4 rounded-md shadow cursor-pointer"
+              className="bg-gray-100 p-4 rounded-md shadow cursor-pointer hover:bg-gray-200"
               onClick={() => showInvoiceDetails(invoice.id)}
             >
               <div className="flex justify-between">
@@ -58,8 +64,9 @@ const OrderPage = () => {
       </div>
 
       {selectedInvoice && (
-        <div className="modal-bg active">
-          <div className="bg-white p-6 rounded shadow-lg w-[70%]">
+        <div className="fixed inset-0 overflow-y-auto flex items-center justify-center z-50">
+          <div className="w-full h-full bg-black opacity-25 fixed inset-0"></div>
+          <div className="modal-content z-20 bg-white p-6 rounded shadow-lg w-full max-w-4xl overflow-y-auto">
             <div className="flex justify-between items-center mb-4">
               <h4 className="text-xl font-semibold">Chi Tiết Hóa Đơn</h4>
               <button
@@ -70,42 +77,41 @@ const OrderPage = () => {
               </button>
             </div>
             <div id="invoiceDetails">
-              <p>Mã Hóa Đơn: {selectedInvoice.id}</p>
-              <table className="min-w-full bg-white">
+              <p className="mb-4">Mã Hóa Đơn: {selectedInvoice.id}</p>
+              <table className="min-w-full bg-white border-collapse">
                 <thead>
-                  <tr>
-                    <th className="py-2">Sản Phẩm</th>
-                    <th className="py-2">Ảnh</th>
-                    <th className="py-2">Số Lượng</th>
-                    <th className="py-2">Giá</th>
-                    <th className="py-2">Tổng</th>
+                  <tr className="border-b">
+                    <th className="py-2 px-4">Sản Phẩm</th>
+                    <th className="py-2 px-4">Ảnh</th>
+                    <th className="py-2 px-4">Số Lượng</th>
+                    <th className="py-2 px-4">Giá</th>
+                    <th className="py-2 px-4">Tổng</th>
                   </tr>
                 </thead>
                 <tbody>
                   {selectedInvoiceDetails.map((detail) => (
-                    <tr key={detail.id}>
-                      <td className="py-2 ml-20">{detail.name}</td>
-                      <td className="py-2">
+                    <tr key={detail.id} className="border-b flex-col">
+                      <td className="py-2 px-4">{detail.name}</td>
+                      <td className="py-2 pl-4">
                         <img
-                          src={`../assets/img/${detail.img}`}
+                          src={imagePaths[detail.img]}
                           alt={detail.name}
-                          width="50"
-                          height="50"
+                          className="h-20 w-20 object-cover rounded"
                         />
                       </td>
-                      <td className="py-2">{detail.quantity}</td>
-                      <td className="py-2">
+                      <td className="py-2 px-4 text-center">{detail.quantity}</td>
+                      <td className="py-2 px-4 text-center">
                         {detail.price.toLocaleString()} VNĐ
                       </td>
-                      <td className="py-2">
+                      <td className="py-2 px-4 text-center">
                         {detail.total.toLocaleString()} VNĐ
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <div className="flex place-content-between">
-                <p>Ngày: {selectedInvoice.date}</p>
+              <div className="flex justify-between mt-4">
+                <p>Ngày tạo: {formatDate(selectedInvoice.date)}</p>
                 <p>Tổng Tiền: {selectedInvoice.total.toLocaleString()} VNĐ</p>
               </div>
             </div>

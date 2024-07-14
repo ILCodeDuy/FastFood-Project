@@ -6,15 +6,3 @@
 .dancing-script {
     font-family: "Dancing Script", cursive;
 }
-
-.modal-bg {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
-}
-.modal-bg.active {
-    display: flex;
-}
