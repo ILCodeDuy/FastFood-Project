@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faUser } from "@fortawesome/free-solid-svg-icons";
-import { Logo } from '../assets/img';
+import { Logo } from '../../assets/img';
 
 const Header2 = () => {
   const [searchTerm, setSearchTerm] = useState(""); // State to hold search term
