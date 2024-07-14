@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import imagePaths from "../../assets/menu/menu";
-
+import { addToCart } from "../../Service/Cart/cartService";
 const Menu = () => {
   const plus = faPlus;
   const [products, setProducts] = useState([]);
@@ -22,6 +22,10 @@ const Menu = () => {
   // Hàm xử lý khi người dùng muốn xem thêm sản phẩm
   const loadMoreProducts = () => {
     setVisibleProducts((prev) => prev + 6); // Tăng số lượng sản phẩm hiển thị lên 6
+  };
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
   };
 
   return (
@@ -47,7 +51,10 @@ const Menu = () => {
             <p className="font-bold mt-4">
               Số lượng còn lại: {product.quantity}
             </p>
-            <button className="bg-yellow-400 p-3 rounded-full w-12 relative left-48 bottom-16">
+            <button
+              className="bg-yellow-400 p-3 rounded-full w-12 relative left-48 bottom-16"
+              onClick={() => handleAddToCart(product)}
+            >
               <FontAwesomeIcon
                 icon={plus}
                 className="text-white text-xl text-center cursor-pointer"

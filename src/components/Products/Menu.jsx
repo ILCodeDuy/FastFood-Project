@@ -5,6 +5,7 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Categories from "./Categories";
 import Pagination from "./Pagination";
 import imagePaths from "../../assets/menu/menu";
+import { addToCart } from "../../Service/Cart/cartService";
 
 const Menu = () => {
   const plus = faPlus;
@@ -63,6 +64,10 @@ const Menu = () => {
     setCurrentPage(1);
   };
 
+  const handleAddToCart = (product) => {
+    addToCart(product);
+  };
+
   return (
     <div className="container mx-auto px-4">
       <h2 className="text-center dancing-script text-slate-950 text-5xl p-6">
@@ -83,7 +88,10 @@ const Menu = () => {
             <h2 className="text-3xl pb-4 dancing-script mt-4 mb-2">{product.name}</h2>
             <span className="font-bold">{product.price} VNĐ</span>
             <p className="font-bold mt-2">Số lượng còn lại: {product.quantity}</p>
-            <button className="bg-yellow-400 p-3 rounded-full w-12 relative left-48 bottom-16">
+            <button
+              className="bg-yellow-400 p-3 rounded-full w-12 relative left-48 bottom-16"
+              onClick={() => handleAddToCart(product)}
+            >
               <FontAwesomeIcon
                 icon={plus}
                 className="text-white text-xl text-center cursor-pointer"

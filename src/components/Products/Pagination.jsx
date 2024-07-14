@@ -13,7 +13,7 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
         {pageNumbers.map((number) => (
           <li
             key={number}
-            className={`page-item p-3 mr-2 ${number === currentPage ? 'bg-gray-400' : 'bg-gray-200'}`}
+            className={`page-item cursor-pointer p-3 mr-2 ${number === currentPage ? 'bg-gray-400' : 'bg-gray-200'}`}
             onClick={() => onPageChange(number)}
           >
             <div className="cursor-pointer">{number}</div>
