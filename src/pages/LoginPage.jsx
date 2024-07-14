@@ -1,6 +1,29 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleLogin = async () => {
+    try {
+      const response = await axios.post("http://localhost:3001/api/login", {
+        username,
+        password,
+      });
+
+      if (response.data.user) {
+        localStorage.setItem("user", JSON.stringify(response.data.user));
+        navigate("/");
+      }
+    } catch (error) {
+      setError("Tài khoản hoặc mật khẩu sai");
+    }
+  };
+
   return (
     <>
       <div className="p-20 mt-14">
@@ -25,6 +48,7 @@ const Login = () => {
               </li>
             </ul>
           </div>
+          {error && <p className="text-red-500">{error}</p>}
           <div className="mt-6">
             <label
               htmlFor="username"
@@ -36,6 +60,8 @@ const Login = () => {
               type="text"
               id="username"
               className="shadow appearance-none border border-gray-300 rounded w-[640px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="mt-6">
@@ -49,6 +75,8 @@ const Login = () => {
               type="password"
               id="password"
               className="shadow appearance-none border border-gray-300 rounded w-[640px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="mt-6 mb-6 float-left">
@@ -58,7 +86,12 @@ const Login = () => {
             </label>
           </div>
           <div className="mt-6">
-            <button className="btn w-full bg-gray-800 text-white">Login</button>
+            <button
+              className="btn w-full bg-gray-800 text-white"
+              onClick={handleLogin}
+            >
+              Login
+            </button>
           </div>
           <div className="mt-2 mb-6 float-left">
             <div className="underline">Forgot password?</div>

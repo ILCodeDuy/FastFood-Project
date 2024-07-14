@@ -4,6 +4,7 @@ import { Logo } from "../../assets/img";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faUser } from "@fortawesome/free-solid-svg-icons";
 const Header = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
   return (
     <div className="h-52">
       <div className="flex center items-center z-50 relative top-0">
@@ -49,16 +50,10 @@ const Header = () => {
             icon={faMagnifyingGlass}
             className="text-2xl mr-10 text-white cursor-pointer"
           />
-          <NavLink to="/login">
+          <NavLink to={user ? "/profile" : "/login"} >
             <FontAwesomeIcon
               icon={faUser}
               className="text-2xl mr-10 text-white cursor-pointer"
-            />
-          </NavLink>
-          <NavLink to="/profile">
-            <FontAwesomeIcon
-              icon={faUser}
-              className="hidden text-2xl mr-10 text-white cursor-pointer"
             />
           </NavLink>
           <div className="flex-none">

@@ -6,6 +6,7 @@ import { faMagnifyingGlass, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Logo } from '../../assets/img';
 
 const Header2 = () => {
+  const user = JSON.parse(localStorage.getItem('user'));
   const [searchTerm, setSearchTerm] = useState(""); // State to hold search term
   const navigate = useNavigate();
 
@@ -76,16 +77,10 @@ const Header2 = () => {
           />
         </label>
         <div className="ml-36 flex items-center">
-          <NavLink to="/login">
+          <NavLink to={user ? "/profile" : "/login"}>
             <FontAwesomeIcon
               icon={faUser}
               className=" text-2xl mr-10 cursor-pointer"
-            />
-          </NavLink>
-          <NavLink to="/profile">
-            <FontAwesomeIcon
-              icon={faUser}
-              className="hidden text-2xl mr-10 cursor-pointer"
             />
           </NavLink>
           <div className="flex-none">
