@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { format } from "date-fns";
 import imagePaths from "../../assets/menu/menu";
-
+import { formatCurrency } from "../../utils/formatCurrency";
 const OrderPage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
   const userId = user.id; // Replace with actual user ID or get it dynamically
@@ -55,8 +55,8 @@ const OrderPage = () => {
             >
               <div className="flex justify-between">
                 <div>Mã Hóa Đơn: {invoice.id}</div>
-                <div>Ngày: {invoice.date}</div>
-                <div>Tổng Tiền: {invoice.total.toLocaleString()} VNĐ</div>
+                <div>Ngày: {formatDate(invoice.date)}</div>
+                <div>Tổng Tiền: {formatCurrency(invoice.total)}</div>
               </div>
             </div>
           ))}
@@ -70,17 +70,17 @@ const OrderPage = () => {
             <div className="flex justify-between items-center mb-4">
               <h4 className="text-xl font-semibold">Chi Tiết Hóa Đơn</h4>
               <button
-                className="text-gray-500 hover:text-gray-800"
+                className="text-slate-800 bg-slate-200 p-2 rounded hover:text-red-500"
                 onClick={hideInvoiceDetails}
               >
-                Đóng
+                Close
               </button>
             </div>
             <div id="invoiceDetails">
               <p className="mb-4">Mã Hóa Đơn: {selectedInvoice.id}</p>
               <table className="min-w-full bg-white border-collapse">
                 <thead>
-                  <tr className="border-b">
+                  <tr className="border-b bg-[#1a7758] text-white">
                     <th className="py-2 px-4">Sản Phẩm</th>
                     <th className="py-2 px-4">Ảnh</th>
                     <th className="py-2 px-4">Số Lượng</th>
@@ -92,7 +92,7 @@ const OrderPage = () => {
                   {selectedInvoiceDetails.map((detail) => (
                     <tr key={detail.id} className="border-b flex-col">
                       <td className="py-2 px-4">{detail.name}</td>
-                      <td className="py-2 pl-4">
+                      <td className="py-2 pl-6">
                         <img
                           src={imagePaths[detail.img]}
                           alt={detail.name}
@@ -101,18 +101,18 @@ const OrderPage = () => {
                       </td>
                       <td className="py-2 px-4 text-center">{detail.quantity}</td>
                       <td className="py-2 px-4 text-center">
-                        {detail.price.toLocaleString()} VNĐ
+                        {formatCurrency(detail.price)}
                       </td>
                       <td className="py-2 px-4 text-center">
-                        {detail.total.toLocaleString()} VNĐ
+                        {formatCurrency(detail.total)}
                       </td>
                     </tr>
                   ))}
                 </tbody>
               </table>
-              <div className="flex justify-between mt-4">
+              <div className="flex justify-between mt-4 px-3">
                 <p>Ngày tạo: {formatDate(selectedInvoice.date)}</p>
-                <p>Tổng Tiền: {selectedInvoice.total.toLocaleString()} VNĐ</p>
+                <p className="mr-6">Tổng Tiền: {formatCurrency(selectedInvoice.total)}</p>
               </div>
             </div>
           </div>

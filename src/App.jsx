@@ -12,6 +12,7 @@ import Login from "./pages/LoginPage";
 import SignUp from "./pages/SignUpPage";
 import Account from "./pages/User/Account";
 import OrderPage from "./pages/User/OrderPage";
+import EditUser from "./pages/User/EditUser";
 
 function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
         <Route path="/profile" element={<ProfilePage />}>
           <Route index element={<Account />} />
           <Route path="order" element={<OrderPage />} />
+          <Route path="edit-user" element={<EditUser />} />
         </Route>
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<Login />} />

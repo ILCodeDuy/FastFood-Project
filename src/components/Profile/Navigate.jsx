@@ -16,7 +16,7 @@ const Navigate = () => {
           <NavLink to="/profile/order">Hoá Đơn</NavLink>
         </li>
         <li className="py-2">
-          <NavLink to="/up-profile">Cài Đặt</NavLink>
+          <NavLink to="/profile/edit-user">Cài Đặt</NavLink>
         </li>
         <li className="py-2">
           <NavLink to="/login" onClick={logout}>

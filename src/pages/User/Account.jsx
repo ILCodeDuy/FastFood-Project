@@ -1,14 +1,32 @@
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 const Account = () => {
-    const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
 
-    useEffect(() => {
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+
+  const fetchUserData = async () => {
+    try {
       const storedUser = JSON.parse(localStorage.getItem("user"));
-      console.log(storedUser)
-      setUser(storedUser);
-    }, []);
-  
+      const response = await axios.get(`http://localhost:3001/api/user/${storedUser.id}`);
+      setUser(response.data);
+    } catch (error) {
+      console.error('Error fetching user details:', error);
+      // Handle error, show message, etc.
+    }
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setUser(prevUser => ({
+      ...prevUser,
+      [name]: value
+    }));
+  };
+
   return (
     <div>
       {user && (
@@ -30,9 +48,7 @@ const Account = () => {
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 type="text"
                 value={user.username}
-                onChange={(e) =>
-                  setUser({ ...user, username: e.target.value })
-                }
+                onChange={handleChange}
               />
             </div>
             <div className="mb-4">
@@ -44,15 +60,13 @@ const Account = () => {
               </label>
               <input
                 id="number-phone"
-                name="number-phone"
+                name="phone"
                 placeholder="Số Điện Thoại"
                 required
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 type="text"
                 value={user.phone || ""}
-                onChange={(e) =>
-                  setUser({ ...user, phone: e.target.value })
-                }
+                onChange={handleChange}
               />
             </div>
             <div className="mb-4">
@@ -70,9 +84,7 @@ const Account = () => {
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 type="password"
                 value={user.password}
-                onChange={(e) =>
-                  setUser({ ...user, password: e.target.value })
-                }
+                onChange={handleChange}
               />
             </div>
             <div className="mb-4">
@@ -89,9 +101,7 @@ const Account = () => {
                 rows="4"
                 className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
                 value={user.address || ""}
-                onChange={(e) =>
-                  setUser({ ...user, address: e.target.value })
-                }
+                onChange={handleChange}
               />
             </div>
           </form>
