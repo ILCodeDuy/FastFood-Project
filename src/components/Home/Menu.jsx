@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import imagePaths from "../../assets/menu/menu";
 import { addToCart } from "../../Service/Cart/cartService";
+import { formatCurrency } from "../../utils/formatCurrency";
 const Menu = () => {
   const plus = faPlus;
   const [products, setProducts] = useState([]);
@@ -47,7 +48,7 @@ const Menu = () => {
             <h2 className="text-3xl dancing-script mt-4 mb-10">
               {product.name}
             </h2>
-            <span className="font-bold mt-20">{product.price} VNĐ</span>
+            <span className="font-bold mt-20">Giá: {formatCurrency(product.price)}</span>
             <p className="font-bold mt-4">
               Số lượng còn lại: {product.quantity}
             </p>

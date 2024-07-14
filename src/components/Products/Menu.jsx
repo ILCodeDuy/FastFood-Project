@@ -6,7 +6,7 @@ import Categories from "./Categories";
 import Pagination from "./Pagination";
 import imagePaths from "../../assets/menu/menu";
 import { addToCart } from "../../Service/Cart/cartService";
-
+import { formatCurrency } from "../../utils/formatCurrency";
 const Menu = () => {
   const plus = faPlus;
   const [categories, setCategories] = useState([]);
@@ -86,7 +86,7 @@ const Menu = () => {
               alt={product.name}
             />
             <h2 className="text-3xl pb-4 dancing-script mt-4 mb-2">{product.name}</h2>
-            <span className="font-bold">{product.price} VNĐ</span>
+            <span className="font-bold">Giá: {formatCurrency(product.price)}</span>
             <p className="font-bold mt-2">Số lượng còn lại: {product.quantity}</p>
             <button
               className="bg-yellow-400 p-3 rounded-full w-12 relative left-48 bottom-16"
