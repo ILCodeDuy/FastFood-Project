@@ -52,13 +52,13 @@ const Header = () => {
           <NavLink to="/login">
             <FontAwesomeIcon
               icon={faUser}
-              className="hidden text-2xl mr-10 text-white cursor-pointer"
+              className="text-2xl mr-10 text-white cursor-pointer"
             />
           </NavLink>
           <NavLink to="/profile">
             <FontAwesomeIcon
               icon={faUser}
-              className="text-2xl mr-10 text-white cursor-pointer"
+              className="hidden text-2xl mr-10 text-white cursor-pointer"
             />
           </NavLink>
           <div className="flex-none">

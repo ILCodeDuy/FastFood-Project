@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { getCart, removeFromCart, addToCart as increaseQuantity, decreaseQuantity } from "../../Service/Cart/cartService"; // Import cart service functions
 import imagePaths from "../../assets/menu/menu";
 import { formatCurrency } from "../../utils/formatCurrency";
+
 const Shopping = () => {
   const [cart, setCart] = useState([]);
 
@@ -27,6 +28,39 @@ const Shopping = () => {
       setCart(getCart()); // Update cart state after decreasing quantity
     }
   };
+
+  if (cart.length === 0) {
+    return (
+      <div className="col-span-12 xl:col-span-8 lg:pr-8 pt-14 pb-8 lg:py-24 w-full max-xl:max-w-3xl max-xl:mx-auto">
+        <p className="text-center text-gray-600 text-xl font-semibold">
+          Hiện tại chưa có sản phẩm nào trong giỏ hàng
+        </p>
+        <div className="flex items-center justify-end mt-8">
+        <Link
+          to="/products"
+          className="flex items-center px-5 py-3 rounded-full gap-2 border-none outline-0 group font-semibold text-lg leading-8 text-indigo-600 shadow-sm shadow-transparent transition-all duration-500 hover:text-indigo-700"
+        >
+          Thêm Sản Phẩm
+          <svg
+            className="transition-all duration-500 group-hover:translate-x-2"
+            xmlns="http://www.w3.org/2000/svg"
+            width="22"
+            height="22"
+            viewBox="0 0 22 22"
+            fill="none"
+          >
+            <path
+              d="M12.7757 5.5L18.3319 11.0562M18.3319 11.0562L12.7757 16.6125M18.3319 11.0562L1.83203 11.0562"
+              stroke="#4F46E5"
+              strokeWidth="1.6"
+              strokeLinecap="round"
+            ></path>
+          </svg>
+        </Link>
+      </div>
+      </div>
+    );
+  }
 
   return (
     <div className="col-span-12 xl:col-span-8 lg:pr-8 pt-14 pb-8 lg:py-24 w-full max-xl:max-w-3xl max-xl:mx-auto">
