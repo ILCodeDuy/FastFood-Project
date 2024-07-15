@@ -5,7 +5,7 @@ import imagePaths from "../../assets/menu/menu";
 import { formatCurrency } from "../../utils/formatCurrency";
 const OrderPage = () => {
   const user = JSON.parse(localStorage.getItem("user"));
-  const userId = user.id; // Replace with actual user ID or get it dynamically
+  const userId = user.id; 
   const [invoices, setInvoices] = useState([]);
   const [selectedInvoice, setSelectedInvoice] = useState(null);
   const [selectedInvoiceDetails, setSelectedInvoiceDetails] = useState([]);
