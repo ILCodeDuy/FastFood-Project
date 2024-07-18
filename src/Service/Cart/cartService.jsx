@@ -1,47 +1,70 @@
-// src/services/cartService.js
+import React, { createContext, useState, useEffect } from "react";
 
-const CART_KEY = "shopping_cart";
+const CartContext = createContext();
 
-const getCart = () => {
-  const cart = localStorage.getItem(CART_KEY);
-  return cart ? JSON.parse(cart) : [];
+const CartProvider = ({ children }) => {
+  const CART_KEY = "shopping_cart";
+
+  const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+    const cartFromStorage = localStorage.getItem(CART_KEY);
+    if (cartFromStorage) {
+      setCart(JSON.parse(cartFromStorage));
+    }
+  }, []);
+
+  const saveCart = (updatedCart) => {
+    localStorage.setItem(CART_KEY, JSON.stringify(updatedCart));
+    setCart(updatedCart);
+  };
+
+  const addToCart = (product) => {
+    const updatedCart = [...cart];
+    const existingProduct = updatedCart.find((item) => item.id === product.id);
+
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+    } else {
+      updatedCart.push({ ...product, quantity: 1 });
+    }
+
+    saveCart(updatedCart);
+  };
+
+  const removeFromCart = (productId) => {
+    const updatedCart = cart.filter((item) => item.id !== productId);
+    saveCart(updatedCart);
+  };
+
+  const decreaseQuantity = (product) => {
+    const updatedCart = [...cart];
+    const existingProduct = updatedCart.find((item) => item.id === product.id);
+
+    if (existingProduct && existingProduct.quantity > 1) {
+      existingProduct.quantity -= 1;
+      saveCart(updatedCart);
+    }
+  };
+
+  const clearCart = () => {
+    localStorage.removeItem(CART_KEY);
+    setCart([]);
+  };
+
+  const cartContextValue = {
+    cart,
+    addToCart,
+    removeFromCart,
+    decreaseQuantity,
+    clearCart,
+  };
+
+  return (
+    <CartContext.Provider value={cartContextValue}>
+      {children}
+    </CartContext.Provider>
+  );
 };
 
-const saveCart = (cart) => {
-  localStorage.setItem(CART_KEY, JSON.stringify(cart));
-};
-
-const addToCart = (product) => {
-  const cart = getCart();
-  const existingProduct = cart.find((item) => item.id === product.id);
-
-  if (existingProduct) {
-    existingProduct.quantity += 1;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
-
-  saveCart(cart);
-};
-
-const removeFromCart = (productId) => {
-  let cart = getCart();
-  cart = cart.filter((item) => item.id !== productId);
-  saveCart(cart);
-};
-
-const decreaseQuantity = (product) => {
-  const cart = getCart();
-  const existingProduct = cart.find((item) => item.id === product.id);
-
-  if (existingProduct && existingProduct.quantity > 1) {
-    existingProduct.quantity -= 1;
-    saveCart(cart);
-  }
-};
-
-const clearCart = () => {
-  localStorage.removeItem(CART_KEY);
-};
-
-export { getCart, addToCart, removeFromCart, decreaseQuantity, clearCart };
+export { CartProvider, CartContext };

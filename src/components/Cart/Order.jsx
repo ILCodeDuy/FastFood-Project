@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { formatCurrency } from "../../utils/formatCurrency";
-
+import { CartContext } from "../../Service/Cart/cartService";
 const Order = () => {
+  const { clearCart } = useContext(CartContext);
   const navigate = useNavigate();
-  const user = JSON.parse(localStorage.getItem("user"));
-  const user_id = user.id;
+  const user = JSON.parse(localStorage.getItem("user")) || {}; // Default to empty object if user is null
+  const user_id = user.id || ""; // Default to empty string if user.id is null
   const [recipient_name, setRecipientName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -55,7 +56,6 @@ const Order = () => {
       const orderResponse = await axios.post("http://localhost:3001/api/orders", order);
       console.log("Order placed successfully:", orderResponse.data);
       const orderId = orderResponse.data.orderId;
-      console.log(orderId)
       const cartItems = JSON.parse(localStorage.getItem("shopping_cart")) || [];
       const orderDetailPromises = cartItems.map((item) => {
         return axios.post("http://localhost:3001/api/orderdetails", {
@@ -68,11 +68,11 @@ const Order = () => {
 
       const orderDetailResponses = await Promise.all(orderDetailPromises);
       console.log("Order details added successfully:", orderDetailResponses);
-
       localStorage.removeItem("shopping_cart");
+      clearCart();
       alert('Đặt hàng thành công');
       navigate("/")
-      // Ví dụ: history.push("/order-confirmation");
+      // Example: navigate("/order-confirmation");
     } catch (error) {
       console.error("Error placing order:", error);
     }

@@ -1,22 +1,22 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import Categories from "./Categories";
 import Pagination from "./Pagination";
 import imagePaths from "../../assets/menu/menu";
-import { addToCart } from "../../Service/Cart/cartService";
 import { formatCurrency } from "../../utils/formatCurrency";
+import { CartContext } from '../../Service/Cart/cartService';
 const Menu = () => {
+  const { addToCart } = useContext(CartContext);
   const plus = faPlus;
   const [categories, setCategories] = useState([]);
   const [products, setProducts] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState(null); // Selected category state
-  const [currentPage, setCurrentPage] = useState(1); // Current page state
-  const [productsPerPage] = useState(12); // Products per page
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(12);
   const location = useLocation();
 
-  // Fetch categories
   useEffect(() => {
     fetch("http://localhost:3001/api/categories")
       .then((response) => response.json())
@@ -64,9 +64,6 @@ const Menu = () => {
     setCurrentPage(1);
   };
 
-  const handleAddToCart = (product) => {
-    addToCart(product);
-  };
 
   return (
     <div className="container mx-auto px-4">
@@ -90,7 +87,7 @@ const Menu = () => {
             <p className="font-bold mt-2">Số lượng còn lại: {product.quantity}</p>
             <button
               className="bg-yellow-400 p-3 rounded-full w-12 relative left-48 bottom-16"
-              onClick={() => handleAddToCart(product)}
+              onClick={() => addToCart(product)}
             >
               <FontAwesomeIcon
                 icon={plus}

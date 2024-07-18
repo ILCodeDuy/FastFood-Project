@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons";
 import imagePaths from "../../assets/menu/menu";
-import { addToCart } from "../../Service/Cart/cartService";
+import { CartContext } from "../../Service/Cart/cartService";
 import { formatCurrency } from "../../utils/formatCurrency";
 import axios from "axios";
 
 const Menu = () => {
+  const { addToCart } = useContext(CartContext);
   const plus = faPlus;
   const [products, setProducts] = useState([]);
   const [visibleProducts, setVisibleProducts] = useState(9); // Initial number of products to display
@@ -26,10 +27,6 @@ const Menu = () => {
 
   const loadMoreProducts = () => {
     setVisibleProducts((prev) => prev + 6); // Increase the number of displayed products by 6
-  };
-
-  const handleAddToCart = (product) => {
-    addToCart(product);
   };
 
   const fetchProductDetails = async (productId) => {
@@ -72,7 +69,7 @@ const Menu = () => {
             </p>
             <button
               className="bg-yellow-400 p-3 rounded-full w-12 relative left-48 bottom-16"
-              onClick={() => handleAddToCart(product)}
+              onClick={() => addToCart(product)}
             >
               <FontAwesomeIcon
                 icon={plus}
@@ -120,7 +117,7 @@ const Menu = () => {
                   </div>
                 </div>
                 <div className="flex justify-end mt-6">
-                  <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={() => handleAddToCart(selectedProduct)}>Mua</button>
+                  <button className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600" onClick={() => addToCart(selectedProduct)}>Mua</button>
                 </div>
               </div>
             </div>

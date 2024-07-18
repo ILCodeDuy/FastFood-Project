@@ -1,33 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
-import { getCart, removeFromCart, addToCart as increaseQuantity, decreaseQuantity } from "../../Service/Cart/cartService"; // Import cart service functions
-import imagePaths from "../../assets/menu/menu";
+import { CartContext } from '../../Service/Cart/cartService';
 import { formatCurrency } from "../../utils/formatCurrency";
+import imagePaths from '../../assets/menu/menu';
 
 const Shopping = () => {
-  const [cart, setCart] = useState([]);
+  const { cart, addToCart, removeFromCart, decreaseQuantity } = useContext(CartContext);
 
-  useEffect(() => {
-    const cartItems = getCart();
-    setCart(cartItems);
-  }, []);
-
-  const handleRemove = (productId) => {
-    removeFromCart(productId);
-    setCart(getCart()); // Update cart state after removal
-  };
-
-  const handleIncreaseQuantity = (product) => {
-    increaseQuantity(product);
-    setCart(getCart()); // Update cart state after increasing quantity
-  };
-
-  const handleDecreaseQuantity = (product) => {
-    if (product.quantity > 1) {
-      decreaseQuantity(product);
-      setCart(getCart()); // Update cart state after decreasing quantity
-    }
-  };
 
   if (cart.length === 0) {
     return (
@@ -112,7 +91,7 @@ const Shopping = () => {
                 <h6 className="font-normal text-base leading-7 text-gray-500">
                   <button
                     className="text-red-500 hover:text-red-700 transition-all duration-300"
-                    onClick={() => handleRemove(product.id)}
+                    onClick={() => removeFromCart(product.id)}
                   >
                     Remove
                   </button>
@@ -123,7 +102,7 @@ const Shopping = () => {
               <div className="flex items-center h-full">
                 <button
                   className="group rounded-l-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300"
-                  onClick={() => handleDecreaseQuantity(product)}
+                  onClick={() => decreaseQuantity(product)}
                 >
                   <svg
                     className="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"
@@ -149,7 +128,7 @@ const Shopping = () => {
                 />
                 <button
                   className="group rounded-r-xl px-5 py-[18px] border border-gray-200 flex items-center justify-center shadow-sm shadow-transparent transition-all duration-500 hover:bg-gray-50 hover:border-gray-300 hover:shadow-gray-300 focus-within:outline-gray-300"
-                  onClick={() => handleIncreaseQuantity(product)}
+                  onClick={() => addToCart(product)}
                 >
                   <svg
                     className="stroke-gray-900 transition-all duration-500 group-hover:stroke-black"

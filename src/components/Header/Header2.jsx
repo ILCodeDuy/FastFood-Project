@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { NavLink } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faUser } from "@fortawesome/free-solid-svg-icons";
 import { Logo } from '../../assets/img';
-
+import { CartContext } from "../../Service/Cart/cartService";
 const Header2 = () => {
+  const { cart } = useContext(CartContext);
   const user = JSON.parse(localStorage.getItem('user'));
   const [searchTerm, setSearchTerm] = useState(""); // State to hold search term
   const navigate = useNavigate();
@@ -102,7 +103,7 @@ const Header2 = () => {
                         d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
                       />
                     </svg>
-                    <span className="badge badge-sm indicator-item text-black bg-red-500 rounded-full size-5">2</span>
+                    <span className="badge badge-sm indicator-item text-white bg-red-500 rounded-full size-5">{cart.length}</span>
                   </div>
                 </div>
               </div>
