@@ -15,9 +15,12 @@ import OrderPage from "./pages/User/OrderPage";
 import EditUser from "./pages/User/EditUser";
 import ExpandableTable from "./pages/ExpandableTable";
 import Admin from "./pages/Admin/AdminPage";
+import Dashboard from "./pages/Admin/Dashboard";
 
 function App() {
   const location = useLocation();
+
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
   const renderHeader = () => {
     if (location.pathname === "/") {
@@ -29,7 +32,7 @@ function App() {
 
   return (
     <div>
-      {renderHeader()}
+      {!isAdminRoute && renderHeader()}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/products" element={<ProductsPage />} />
@@ -43,9 +46,11 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
         <Route path="/table" element={<ExpandableTable />} />
-        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin" element={<Admin />}>
+          <Route index element={<Dashboard />} />
+        </Route>
       </Routes>
-      <Footer />
+      {!isAdminRoute && <Footer />}
     </div>
   );
 }
