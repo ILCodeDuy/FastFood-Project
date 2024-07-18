@@ -13,6 +13,8 @@ import SignUp from "./pages/SignUpPage";
 import Account from "./pages/User/Account";
 import OrderPage from "./pages/User/OrderPage";
 import EditUser from "./pages/User/EditUser";
+import ExpandableTable from "./pages/ExpandableTable";
+import Admin from "./pages/Admin/AdminPage";
 
 function App() {
   const location = useLocation();
@@ -40,6 +42,8 @@ function App() {
         <Route path="/cart" element={<CartPage />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<SignUp />} />
+        <Route path="/table" element={<ExpandableTable />} />
+        <Route path="/admin" element={<Admin />} />
       </Routes>
       <Footer />
     </div>
