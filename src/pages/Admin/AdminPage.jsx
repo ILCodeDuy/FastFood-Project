@@ -18,13 +18,13 @@ const Admin = () => {
             Dashboard
           </Link>
           <Link
-            to="/ql-categories"
+            to="/admin/categories"
             className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-100 rounded hover:bg-gray-200 hover:text-gray-900"
           >
             Categories
           </Link>
           <Link
-            to="/ql-products"
+            to="/admin/products"
             className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-100 rounded hover:bg-gray-200 hover:text-gray-900"
           >
             Products
@@ -63,7 +63,7 @@ const Admin = () => {
             </div>
           </div>
         </nav>
-        <main className="flex-1 p-6">
+        <main className="p-6 h-screen">
             <Outlet />
         </main>
       </div>

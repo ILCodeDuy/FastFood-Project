@@ -16,6 +16,8 @@ import EditUser from "./pages/User/EditUser";
 import ExpandableTable from "./pages/ExpandableTable";
 import Admin from "./pages/Admin/AdminPage";
 import Dashboard from "./pages/Admin/Dashboard";
+import CategoriesAdmin from "./pages/Admin/CategoriesAdmin";
+import ProductsAdmin from "./pages/Admin/ProductsAdmin";
 
 function App() {
   const location = useLocation();
@@ -48,6 +50,8 @@ function App() {
         <Route path="/table" element={<ExpandableTable />} />
         <Route path="/admin" element={<Admin />}>
           <Route index element={<Dashboard />} />
+          <Route path="categories" element={<CategoriesAdmin />} />
+          <Route path="products" element={<ProductsAdmin />} />
         </Route>
       </Routes>
       {!isAdminRoute && <Footer />}
