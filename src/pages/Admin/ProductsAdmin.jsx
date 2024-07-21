@@ -43,6 +43,27 @@ const ProductsAdmin = () => {
     window.location.reload();
   };
 
+  const handleDeleteProduct = async (productId) => {
+    const isConfirmed = window.confirm("Bạn có chắc chắn muốn xoá sản phẩm này không?");
+    if (!isConfirmed) {
+      return;
+    }
+    try {
+      const response = await fetch(`http://localhost:3001/api/data/${productId}`, {
+        method: 'DELETE',
+      });
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+      console.log("API Response:", data);
+      // Update the state to remove the deleted product
+      setProducts(products.filter((product) => product.id !== productId));
+    } catch (error) {
+      console.error("Error deleting product:", error);
+    }
+  };
+
   const totalPages = Math.ceil(products.length / productsPerPage);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
@@ -128,7 +149,7 @@ const ProductsAdmin = () => {
                     <button className="btn bg-yellow-300 text-white mr-4">
                       Edit
                     </button>
-                    <button className="btn bg-red-500 text-white">
+                    <button className="btn bg-red-500 text-white" onClick={() => handleDeleteProduct(product.id)}>
                       Delete
                     </button>
                   </td>
