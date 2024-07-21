@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import imagePaths from "../../assets/menu/menu";
+import Pagination from "../../components/Products/Pagination"; // Make sure this is the correct path
 
 const ProductsAdmin = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [products, setProducts] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [productsPerPage] = useState(10); // Adjust based on your preference
 
   useEffect(() => {
     fetch("http://localhost:3001/api/data")
@@ -40,6 +43,14 @@ const ProductsAdmin = () => {
     closeModal();
   };
 
+  // Pagination logic
+  const totalPages = Math.ceil(products.length / productsPerPage);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = products.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+
   return (
     <div className="h-full">
       <div className="flex justify-between">
@@ -75,10 +86,7 @@ const ProductsAdmin = () => {
             <div className="modal-action w-full">
               <form className="w-full space-y-4" onSubmit={handleAddProduct}>
                 <div>
-                  <label
-                    htmlFor="code"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="code" className="block text-sm font-medium text-gray-700">
                     Code:
                   </label>
                   <input
@@ -90,10 +98,7 @@ const ProductsAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="name"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
                     Name:
                   </label>
                   <input
@@ -105,10 +110,7 @@ const ProductsAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="quantity"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="quantity" className="block text-sm font-medium text-gray-700">
                     Quantity:
                   </label>
                   <input
@@ -120,10 +122,7 @@ const ProductsAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="price"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="price" className="block text-sm font-medium text-gray-700">
                     Price:
                   </label>
                   <input
@@ -136,10 +135,7 @@ const ProductsAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="description"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="description" className="block text-sm font-medium text-gray-700">
                     Description:
                   </label>
                   <textarea
@@ -150,10 +146,7 @@ const ProductsAdmin = () => {
                   ></textarea>
                 </div>
                 <div>
-                  <label
-                    htmlFor="img"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="img" className="block text-sm font-medium text-gray-700">
                     Image:
                   </label>
                   <input
@@ -165,10 +158,7 @@ const ProductsAdmin = () => {
                   />
                 </div>
                 <div>
-                  <label
-                    htmlFor="categoryId"
-                    className="block text-sm font-medium text-gray-700"
-                  >
+                  <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700">
                     Category ID:
                   </label>
                   <input
@@ -211,9 +201,9 @@ const ProductsAdmin = () => {
               </tr>
             </thead>
             <tbody>
-              {products.map((product, index) => (
+              {currentProducts.map((product, index) => (
                 <tr key={product.id}>
-                  <th>{index + 1}</th>
+                  <th>{indexOfFirstProduct + index + 1}</th>
                   <td>{product.name}</td>
                   <td>
                     <img
@@ -236,6 +226,11 @@ const ProductsAdmin = () => {
           </table>
         </div>
       </div>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        onPageChange={paginate}
+      />
     </div>
   );
 };
