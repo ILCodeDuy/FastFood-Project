@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Field, reduxForm } from 'redux-form';
 
 const validate = (values) => {
@@ -19,11 +19,22 @@ const validate = (values) => {
   } else if (isNaN(Number(values.price))) {
     errors.price = 'Must be a number';
   }
+  if (!values.categoryId) {
+    errors.categoryId = 'Required';
+  }
   return errors;
 };
 
 const ProductForm = ({ handleSubmit, submitting, onSuccess, onCancel }) => {
   const [file, setFile] = useState(null);
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch('http://localhost:3001/api/categories')
+      .then(response => response.json())
+      .then(data => setCategories(data))
+      .catch(error => console.error('Error fetching categories:', error));
+  }, []);
 
   const renderInput = ({ input, type, id, meta, ...rest }) => (
     <div className="mb-4">
@@ -35,6 +46,20 @@ const ProductForm = ({ handleSubmit, submitting, onSuccess, onCancel }) => {
   const renderTextarea = ({ input, id, meta, ...rest }) => (
     <div className="mb-4">
       <textarea {...input} id={id} {...rest} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" />
+      {meta.touched && meta.error && <span className="text-red-500">{meta.error}</span>}
+    </div>
+  );
+
+  const renderSelect = ({ input, id, meta, ...rest }) => (
+    <div className="mb-4">
+      <select {...input} id={id} {...rest} className="mt-1  block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+        <option value="">Select a category</option>
+        {categories.map(category => (
+          <option key={category.id} value={category.id}>
+            {category.categoryName}
+          </option>
+        ))}
+      </select>
       {meta.touched && meta.error && <span className="text-red-500">{meta.error}</span>}
     </div>
   );
@@ -140,12 +165,11 @@ const ProductForm = ({ handleSubmit, submitting, onSuccess, onCancel }) => {
       </div>
       <div>
         <label htmlFor="categoryId" className="block text-sm font-medium text-gray-700">
-          Category ID:
+          Category:
         </label>
         <Field
           name="categoryId"
-          component={renderInput}
-          type="number"
+          component={renderSelect}
           id="categoryId"
         />
       </div>
@@ -161,7 +185,6 @@ const ProductForm = ({ handleSubmit, submitting, onSuccess, onCancel }) => {
           Cancel
         </button>
       </div>
-      
     </form>
   );
 };
