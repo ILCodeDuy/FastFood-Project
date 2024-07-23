@@ -6,6 +6,7 @@ const UserAdmin = () => {
   const [selectedUser, setSelectedUser] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [formData, setFormData] = useState({
+    username: "",
     name: "",
     phone: "",
     address: "",
@@ -30,11 +31,12 @@ const UserAdmin = () => {
   const openModal = (user) => {
     setSelectedUser(user);
     setFormData({
+      username: user.username || "",
       name: user.name || "",
       phone: user.phone || "",
       address: user.address || "",
       email: user.email || "",
-      password: user.password ||"",
+      password: user.password || "",
     });
     setIsModalOpen(true);
   };
@@ -57,7 +59,10 @@ const UserAdmin = () => {
     }
 
     try {
-      await axios.put(`http://localhost:3001/api/user/${selectedUser.id}`, formData);
+      await axios.put(
+        `http://localhost:3001/api/user/${selectedUser.id}`,
+        formData
+      );
       // Refresh user data
       const response = await axios.get("http://localhost:3001/api/users");
       setUsers(response.data);
@@ -97,10 +102,18 @@ const UserAdmin = () => {
               {users.map((user) => (
                 <tr key={user.id} className="text-gray-700">
                   <td className="py-2 px-4 border-b text-center">{user.id}</td>
-                  <td className="py-2 px-4 border-b text-center">{user.username}</td>
-                  <td className="py-2 px-4 border-b text-center">{user.email}</td>
-                  <td className="py-2 px-4 border-b text-center">{user.name}</td>
-                  <td className="py-2 px-4 border-b text-center">{user.phone}</td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {user.username}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {user.email}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {user.name}
+                  </td>
+                  <td className="py-2 px-4 border-b text-center">
+                    {user.phone}
+                  </td>
                   <td className="py-2 px-4 border-b text-center">
                     <button
                       className="bg-red-500 text-white px-4 py-2 rounded"
@@ -146,6 +159,20 @@ const UserAdmin = () => {
               </div>
               <div className="p-4">
                 {error && <p className="text-red-500 mb-4">{error}</p>}
+                <div className="mb-4">
+                  <label htmlFor="name" className="block text-gray-700 mb-2">
+                    Tên Tài Khoản
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.username}
+                    onChange={handleChange}
+                    className="shadow border border-gray-300 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                    disabled
+                  />
+                </div>
                 <div className="mb-4">
                   <label htmlFor="name" className="block text-gray-700 mb-2">
                     Tên Người Dùng
@@ -199,7 +226,10 @@ const UserAdmin = () => {
                   />
                 </div>
                 <div className="mb-4">
-                  <label htmlFor="password" className="block text-gray-700 mb-2">
+                  <label
+                    htmlFor="password"
+                    className="block text-gray-700 mb-2"
+                  >
                     Mật Khẩu
                   </label>
                   <input

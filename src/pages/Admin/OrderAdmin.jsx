@@ -241,15 +241,16 @@ const OrderAdmin = () => {
                 <div className="text-lg text-gray-800">
                   <b>Mã Đơn Hàng:</b> {selectedOrder.id}
                 </div>
+                <div>
+                  <b className="text-gray-700">Ngày Đặt Hàng:</b>{" "}
+                  {formattedDate(selectedOrder.date)}
+                </div>
                 <div className="text-lg text-gray-800">
                   <b>Tổng:</b> {formatCurrency(selectedOrder.total)}
                 </div>
               </div>
               <div className="p-4 flex flex-col space-y-2">
-                <div>
-                  <b className="text-gray-700">Ngày:</b>{" "}
-                  {formattedDate(selectedOrder.date)}
-                </div>
+                
                 <div>
                   <b className="text-gray-700">Thông Tin Người Đặt Hàng:</b>
                 </div>
