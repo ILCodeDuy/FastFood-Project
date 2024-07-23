@@ -1,6 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [error, setError] = useState("");
+  const navigate = useNavigate();
+
+  const handleSignUp = async () => {
+    if (password !== confirmPassword) {
+      setError("Mật khẩu xác nhận không khớp");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:3001/api/register", {
+        username,
+        password,
+      });
+      alert(response.data.message);
+      navigate("/login");
+    } catch (error) {
+      setError(error.response?.data?.error || "Đã xảy ra lỗi, vui lòng thử lại sau");
+    }
+  };
+
   return (
     <>
       <div className="p-20 mt-14">
@@ -25,6 +51,7 @@ const SignUp = () => {
               </li>
             </ul>
           </div>
+          {error && <p className="text-red-500">{error}</p>}
           <div className="mt-6">
             <label
               htmlFor="username"
@@ -36,6 +63,8 @@ const SignUp = () => {
               type="text"
               id="username"
               className="shadow appearance-none border border-gray-300 rounded w-[640px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           <div className="mt-6">
@@ -49,6 +78,8 @@ const SignUp = () => {
               type="password"
               id="password"
               className="shadow appearance-none border border-gray-300 rounded w-[640px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           <div className="mt-6">
@@ -62,10 +93,15 @@ const SignUp = () => {
               type="password"
               id="confirmPassword"
               className="shadow appearance-none border border-gray-300 rounded w-[640px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
             />
           </div>
           <div className="mt-6">
-            <button className="btn w-full bg-gray-800 text-white">
+            <button
+              className="btn w-full bg-gray-800 text-white"
+              onClick={handleSignUp}
+            >
               Register
             </button>
           </div>

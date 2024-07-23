@@ -18,6 +18,7 @@ import Admin from "./pages/Admin/AdminPage";
 import Dashboard from "./pages/Admin/Dashboard";
 import CategoriesAdmin from "./pages/Admin/CategoriesAdmin";
 import ProductsAdmin from "./pages/Admin/ProductsAdmin";
+import OrderAdmin from "./pages/Admin/OrderAdmin";
 
 function App() {
   const location = useLocation();
@@ -52,6 +53,7 @@ function App() {
           <Route index element={<Dashboard />} />
           <Route path="categories" element={<CategoriesAdmin />} />
           <Route path="products" element={<ProductsAdmin />} />
+          <Route path="orders" element={<OrderAdmin/>} />
         </Route>
       </Routes>
       {!isAdminRoute && <Footer />}

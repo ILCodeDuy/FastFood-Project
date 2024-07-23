@@ -1,7 +1,7 @@
 const TitlePage = ({ openModal, titleName }) => {
   return (
     <div className="flex justify-between mb-4">
-        <h3 className="font-semibold text-xl">{titleName}</h3>
+        <h3 className="font-semibold text-2xl">{titleName}</h3>
         <button className="btn bg-blue-500 text-white" onClick={openModal}>
           <svg
             stroke="currentColor"

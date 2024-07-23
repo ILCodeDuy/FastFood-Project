@@ -16,8 +16,15 @@ const Login = () => {
       });
 
       if (response.data.user) {
-        localStorage.setItem("user", JSON.stringify(response.data.user));
-        navigate("/");
+        const user = response.data.user;
+        localStorage.setItem("user", JSON.stringify(user));
+
+        // Kiểm tra và điều hướng người dùng
+        if (user.isAdmin === 1) {
+          navigate("/admin");
+        } else {
+          navigate("/");
+        }
       }
     } catch (error) {
       setError("Tài khoản hoặc mật khẩu sai");
