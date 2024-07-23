@@ -10,7 +10,7 @@ const EditUser = () => {
     const fetchUserData = async () => {
       try {
         const storedUser = JSON.parse(localStorage.getItem("user"));
-        const response = await axios.get(`http://localhost:3001/api/user/${storedUser.id}`); // Replace with your actual API endpoint
+        const response = await axios.get(`http://localhost:3001/api/user/${storedUser.id}`);
         setUser(response.data);
       } catch (error) {
         console.error("Error fetching user:", error);
@@ -25,10 +25,10 @@ const EditUser = () => {
 
     try {
       await axios.put(`http://localhost:3001/api/user/${user.id}`, user);
-      console.log("Cập nhật thành công");
-      navigate("/profile");
+      console.log("Update successful");
+      navigate("/profile/user");
     } catch (error) {
-      console.error("Lỗi cập nhật user:", error);
+      console.error("Error updating user:", error);
     }
   };
 
@@ -44,41 +44,59 @@ const EditUser = () => {
 
   return (
     <div className="bg-white shadow-md rounded p-6">
-      <h4 className="text-xl font-semibold mb-4">THÔNG TIN CÁ NHÂN</h4>
+      <h4 className="text-xl font-semibold mb-4">Cập nhật tài khoản</h4>
       <form onSubmit={handleSubmit}>
         <div className="mb-4">
           <label
-            htmlFor="username"
+            htmlFor="name"
             className="block text-sm font-medium text-gray-700"
           >
             Họ Tên
           </label>
           <input
-            id="username"
-            name="username"
-            placeholder="Họ Tên"
+            id="name"
+            name="name"
+            placeholder="Full Name"
             required
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             type="text"
-            value={user.username}
+            value={user.name}
             onChange={handleChange}
           />
         </div>
         <div className="mb-4">
           <label
-            htmlFor="number-phone"
+            htmlFor="phone"
             className="block text-sm font-medium text-gray-700"
           >
             Số Điện Thoại
           </label>
           <input
-            id="number-phone"
+            id="phone"
             name="phone"
-            placeholder="Số Điện Thoại"
+            placeholder="Phone Number"
             required
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             type="text"
-            value={user.phone}
+            value={user.phone || ""}
+            onChange={handleChange}
+          />
+        </div>
+        <div className="mb-4">
+          <label
+            htmlFor="email"
+            className="block text-sm font-medium text-gray-700"
+          >
+            Email
+          </label>
+          <input
+            id="email"
+            name="email"
+            placeholder="Email"
+            required
+            className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+            type="email"
+            value={user.email}
             onChange={handleChange}
           />
         </div>
@@ -87,12 +105,12 @@ const EditUser = () => {
             htmlFor="password"
             className="block text-sm font-medium text-gray-700"
           >
-            Mật Khẩu
+            Password
           </label>
           <input
             id="password"
             name="password"
-            placeholder="password"
+            placeholder="Password"
             required
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             type="password"
@@ -110,15 +128,18 @@ const EditUser = () => {
           <textarea
             id="address"
             name="address"
-            placeholder="Địa Chỉ"
+            placeholder="Address"
             rows="4"
             className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
             value={user.address || ""}
             onChange={handleChange}
           />
         </div>
-        <button type="submit" className="btn btn-primary">
-          Cập Nhật
+        <button
+          type="submit"
+          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        >
+          Cập nhật
         </button>
       </form>
     </div>

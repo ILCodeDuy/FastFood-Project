@@ -3,6 +3,8 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 const SignUp = () => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -17,6 +19,8 @@ const SignUp = () => {
 
     try {
       const response = await axios.post("http://localhost:3001/api/register", {
+        name,
+        email,
         username,
         password,
       });
@@ -52,6 +56,36 @@ const SignUp = () => {
             </ul>
           </div>
           {error && <p className="text-red-500">{error}</p>}
+          <div className="mt-6">
+            <label
+              htmlFor="name"
+              className="block float-left text-gray-700 text-sm mb-2"
+            >
+              Name *
+            </label>
+            <input
+              type="text"
+              id="name"
+              className="shadow appearance-none border border-gray-300 rounded w-[640px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+            />
+          </div>
+          <div className="mt-6">
+            <label
+              htmlFor="email"
+              className="block float-left text-gray-700 text-sm mb-2"
+            >
+              Email *
+            </label>
+            <input
+              type="email"
+              id="email"
+              className="shadow appearance-none border border-gray-300 rounded w-[640px] py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </div>
           <div className="mt-6">
             <label
               htmlFor="username"

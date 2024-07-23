@@ -41,7 +41,7 @@ const SideBar = () => {
           Orders
         </Link>
         <Link
-          to="#"
+          to="/admin/users"
           className="block px-4 py-2 mt-2 text-sm font-semibold text-gray-100 rounded hover:bg-gray-200 hover:text-gray-900"
         >
           <FontAwesomeIcon icon={faUsers} className="mr-2" />

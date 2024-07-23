@@ -52,7 +52,7 @@ const Header = () => {
             icon={faMagnifyingGlass}
             className="text-2xl mr-10 text-white cursor-pointer"
           />
-          <NavLink to={user ? "/profile" : "/login"} >
+          <NavLink to={user ? "/profile/user" : "/login"} >
             <FontAwesomeIcon
               icon={faUser}
               className="text-2xl mr-10 text-white cursor-pointer"

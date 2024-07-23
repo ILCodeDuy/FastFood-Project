@@ -78,7 +78,7 @@ const Header2 = () => {
           />
         </label>
         <div className="ml-36 flex items-center">
-          <NavLink to={user ? "/profile" : "/login"}>
+          <NavLink to={user ? "/profile/user" : "/login"}>
             <FontAwesomeIcon
               icon={faUser}
               className=" text-2xl mr-10 cursor-pointer"
