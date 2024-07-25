@@ -59,7 +59,7 @@ const CategoriesAdmin = () => {
   const handleEditCategory = () => {
     closeEditModal();
     window.location.reload();
-  };
+  }; 
 
   const handleDeleteCategory = async (categoryId) => {
     const isConfirmed = window.confirm("Bạn có chắc chắn muốn xoá danh mục này không?");
